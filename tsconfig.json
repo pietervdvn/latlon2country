@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "lib": [
+      "es2019",
+      "dom"
+    ],
+    "declaration": true,
+    "outDir": "lib",
+    "rootDir": "client",
+    "strict": true,
+    "types": ["node"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["client"],
+  "exclude": ["generator","data","lib","node_modules"]
+}
