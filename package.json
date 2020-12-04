@@ -1,0 +1,27 @@
+{
+  "name": "latlon2country",
+  "version": "1.0.0",
+  "description": "Convert coordinates into the containing country",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-tiles": "cd generator && ts-node generate.ts"
+  },
+  "keywords": [
+    "osm",
+    "openStreetMap",
+    "country",
+    "reverse_geocoding"
+  ],
+  "author": "Pieter Vander Vennet",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "turf": "^3.0.14",
+    "@types/node": "^14.14.10",
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "js-yaml": "^3.14.0",
+    "osmtogeojson": "^3.0.0-beta.4"
+  }
+}
