@@ -89,6 +89,7 @@ export default class CountryCoder {
                 if (isNaN(nextZoom)) {
                     // We have found the country!
                     callback([state]);
+                    return;
                 }
 
                 // Last case: the next zoom level is given:
