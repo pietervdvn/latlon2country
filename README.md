@@ -6,6 +6,21 @@ LatLon2Country is a reverse geocoder, whose goal is to convert a location (latlo
 
 It is specifically designed to work with opening_hours.js and MapComplete and borrows ideas from codegrid.
 
+Usage
+-----
+
+Install with npm:
+
+`npm install latlon2country`
+
+Run the code:
+
+`const coder = new CountryCoder("https://pietervdvn.github.io/latlon2country/")
+coder.CountryCodeFor(lon, lat)
+`
+
+If you want to selfhost the tiles (which is highly recommended), download [tiles.zip](tiles.zip), extract the zip to your server and point the constructor above to the correct path.
+
 Base architecture
 -----------------
 
