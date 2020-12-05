@@ -1,10 +1,12 @@
 {
   "name": "latlon2country",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Convert coordinates into the containing country",
-  "main": "index.js",
+  "main": "index.ts",
+  "typings": "",
   "scripts": {
     "build": "tsc -project .",
+    "publish": "npm run build && npm publish",
     "start": "parcel *.html client/*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-tiles": "cd generator && ts-node generate.ts"

@@ -15,5 +15,5 @@
     "resolveJsonModule": true
   },
   "include": ["client"],
-  "exclude": ["generator","data","lib","node_modules"]
+  "exclude": ["generator","data","lib","node_modules","tiles.zip"]
 }
