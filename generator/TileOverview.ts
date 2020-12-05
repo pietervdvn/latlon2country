@@ -15,12 +15,12 @@ export default class TileOverview {
     private readonly _path: string;
     private _tiles: any; /* { z --> {x --> y}} */
 
-    constructor(countryCode: string, countryName: string, csv: string, path: string = "../data/tiles/") {
+    constructor(countryCode: string, countryName: string, csv?: string, path: string = "../data/tiles/") {
         this.countryCode = countryCode;
         this._countryName = countryName;
         this._path = path;
         this._tiles = {};
-        if (csv !== null) {
+        if (csv !== undefined && csv !== null) {
 
             for (const tile of csv.split("\n")) {
                 const [z, x, y] = tile.split(";").map(Number);
@@ -31,7 +31,7 @@ export default class TileOverview {
     }
 
     static Restore(data: any) {
-        const overview = new TileOverview(data.countryCode, data._countryName, null, data._path);
+        const overview = new TileOverview(data.countryCode, data._countryName, undefined, data._path);
         overview._tiles = data._tiles;
         return overview;
     }
@@ -75,9 +75,9 @@ export default class TileOverview {
 
         this._tiles[z][x][y] = TileState.ZOOM_IN_MORE;
 
-        const results = [];
+        const results: { z: number, x: number, y: number }[] = [];
 
-        function onNewTile(b) {
+        function onNewTile(b: { z: number, x: number, y: number }) {
             results.push(b);
         }
         
@@ -120,12 +120,12 @@ export default class TileOverview {
     }
 
     GetTileOverview(): { z: number, x: number, y: number }[] {
-        const result = []
+        const result: { z: number, x: number, y: number }[] = []
         for (const z in this._tiles) {
             for (const x in this._tiles[z]) {
                 for (const y in this._tiles[z][x]) {
                     if (this._tiles[z][x][y] === TileState.EXISTS) {
-                        result.push({z: z, x: x, y: y})
+                        result.push({z: Number(z), x: Number(x), y: Number(y)})
                     }
                 }
 
@@ -159,11 +159,11 @@ export default class TileOverview {
         return [TileOverview.tile2lon(xyz.x, xyz.z), TileOverview.tile2lat(xyz.y, xyz.z)];
     }
 
-    public static tile2lon(x, z) {
+    public static tile2lon(x: number, z: number): number {
         return (x * 360) / Math.pow(2, z) - 180;
     }
 
-    public static tile2lat(y, z) {
+    public static tile2lat(y: number, z: number): number {
         var n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
         return 180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
     }
@@ -206,7 +206,8 @@ export default class TileOverview {
 
     }
 
-    private IntersectAndWrite(bounds: { x: number, y: number, z: number }, geojson, onNewTile: (t: { z: number, x: number, y: number }) => void) {
+    private IntersectAndWrite(bounds: { x: number, y: number, z: number }, geojson: any, onNewTile: (t: { z: number, x: number, y: number }) => void) {
+        // @ts-ignore
         const intersection = turf.intersect(geojson, TileOverview.tile2Bounds(bounds));
         const z = bounds.z;
         const x = bounds.x;
@@ -217,6 +218,8 @@ export default class TileOverview {
             return;
         }
 
+        
+        // @ts-ignore
         if (intersection.type === "Point") {
             this.Add(z, x, y, TileState.NOT_DEFINED);
             return;
@@ -229,9 +232,9 @@ export default class TileOverview {
         onNewTile(bounds);
     }
 
-    GetPath(xyz: { z: number; x: number; y: number }) {
+    GetPath(xyz?: { z: number; x: number; y: number }) {
         const dir = `${this._path}/${this._countryName}/`
-        if(xyz === null){
+        if (xyz === undefined || xyz === null) {
             return dir;
         }
         return `${dir}${xyz.z}.${xyz.x}.${xyz.y}.geojson`;

@@ -9,8 +9,8 @@
     "declaration": true,
     "outDir": "lib",
     "rootDir": "client",
-    "strict": true,
     "types": ["node"],
+    "strict": false,
     "esModuleInterop": true,
     "resolveJsonModule": true
   },

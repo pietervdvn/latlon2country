@@ -13,7 +13,7 @@ export default class GeoJsonSlicer extends Step {
     private _countryName: string;
 
 
-    constructor(countryName: string, maxComplexity: number = 1000) {
+    constructor(countryName: string, maxComplexity: number = 300) {
         super(countryName + ".tiles", "csv")
         this._maxComplexity = maxComplexity;
         this._countryName = countryName;
@@ -62,11 +62,11 @@ export default class GeoJsonSlicer extends Step {
 
 
     Step(geoJsonString: string, done: (result: string) => void) {
-        const tileOverview = new TileOverview(this._countryName, this._countryName, null);
+        const tileOverview = new TileOverview(this._countryName, this._countryName);
         tileOverview.Add(0, 0, 0);
         const zeroTile = {z: 0, x: 0, y: 0};
-        if(!fs.existsSync(tileOverview.GetPath(null))){
-            fs.mkdirSync(tileOverview.GetPath(null), {recursive: true});
+        if(!fs.existsSync(tileOverview.GetPath(  ))){
+            fs.mkdirSync(tileOverview.GetPath(), {recursive: true});
         }
         fs.writeFileSync(tileOverview.GetPath(zeroTile), geoJsonString, {encoding: "utf8"});
 

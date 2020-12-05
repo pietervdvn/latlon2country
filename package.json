@@ -1,10 +1,11 @@
 {
   "name": "latlon2country",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Convert coordinates into the containing country",
   "main": "index.js",
   "scripts": {
     "build": "tsc -project .",
+    "start": "parcel *.html client/*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-tiles": "cd generator && ts-node generate.ts"
   },
@@ -17,6 +18,8 @@
   "author": "Pieter Vander Vennet",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@turf/boolean-point-in-polygon": "^6.0.1",
+    "@turf/turf": "^5.1.6",
     "@types/node": "^14.14.10",
     "jquery": "^3.5.1",
     "turf": "^3.0.14"

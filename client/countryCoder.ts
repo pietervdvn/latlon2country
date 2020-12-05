@@ -96,13 +96,13 @@ export default class CountryCoder {
                 this.determineCountry(lon, lat, nextZoom, this.lon2tile(lon, nextZoom), this.lat2tile(lat, nextZoom), callback)
 
             } else {
-                // We have reached an actual leaf tile with actual geometry
+                // We have reached an actual leaf tile with actual geometries
                 const geojson = data;
                 const countries = [];
 
                 for (const feature of geojson.features) {
-                    const intersection = turf.intersect(turf.point([lon, lat]), feature)
-                    if (intersection !== undefined) {
+                    const inPolygon = turf.inside(turf.point([lon, lat]), feature);
+                    if (inPolygon) {
                         const country = feature.properties.country;
                         countries.push(country)
                     }
