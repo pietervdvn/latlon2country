@@ -5,6 +5,7 @@ console.log("Testing...")
 function pr(countries: string[]) {
     console.log(">>>>>", countries.join(";"))
 }
+
 console.log("Hi world")
 const coder = new CountryCoder("https://pietervdvn.github.io/latlon2country");
 coder.CountryCodeFor(3.2, 51.2, pr)

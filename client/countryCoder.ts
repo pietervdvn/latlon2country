@@ -117,7 +117,15 @@ export default class CountryCoder {
     }
 
     CountryCodeFor(lon: number, lat: number, callback: ((countries: string[]) => void)): void {
-        this.determineCountry(lon, lat, 0, 0, 0, callback);
+        // We wrap the callback into a try catch, in case something goes wrong
+        const safeCallback = (countries) => {
+            try{
+                callback(countries);
+            }catch(e){
+                console.error("Latlon2country: the dev of this website made a call with CountryCodeFor, however, their callback failed with "+e)
+            }
+        }
+        this.determineCountry(lon, lat, 0, 0, 0, safeCallback);
     }
 
 }
