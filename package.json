@@ -1,6 +1,6 @@
 {
   "name": "latlon2country",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Convert coordinates into the containing country",
   "main": "index.ts",
   "typings": "",
@@ -8,7 +8,7 @@
     "build": "tsc -project .",
     "publish": "npm run build && npm publish",
     "start": "parcel *.html client/*",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ts-node test.ts",
     "generate-tiles": "cd generator && ts-node generate.ts"
   },
   "keywords": [
@@ -24,7 +24,9 @@
     "@turf/turf": "^5.1.6",
     "@types/node": "^14.14.10",
     "jquery": "^3.5.1",
-    "turf": "^3.0.14"
+    "ts-node": "^9.1.1",
+    "turf": "^3.0.14",
+    "xhr2": "^0.2.1"
   },
   "devDependencies": {
     "@types/turf": "^3.5.32",

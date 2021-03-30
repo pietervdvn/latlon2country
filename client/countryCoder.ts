@@ -1,6 +1,9 @@
 import * as turf from "turf";
 
 export default class CountryCoder {
+    public static runningFromConsole = false;
+    /* url --> ([callbacks to call] | result) */
+    private static readonly cache = {}
     private readonly _host: string;
 
     constructor(host: string) {
@@ -14,9 +17,6 @@ export default class CountryCoder {
     lat2tile(lat: number, zoom: number): number {
         return Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom));
     }
-
-    /* url --> ([callbacks to call] | result) */
-    private static readonly cache = {}
 
     Fetch(z: number, x: number, y: number, callback: ((data: any) => void)): void {
 
@@ -45,6 +45,11 @@ export default class CountryCoder {
 
         const url = this._host + "/" + path;
         cached.callbacks.push(callback);
+
+        if (CountryCoder.runningFromConsole) {
+            var XMLHttpRequest = require("xhr2").XMLHttpRequest;
+        }
+        
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
@@ -66,11 +71,15 @@ export default class CountryCoder {
     determineCountry(lon: number, lat: number, z: number, x: number, y: number, callback: ((countries: string[]) => void)): void {
 
         this.Fetch(z, x, y, data => {
+            if(data === undefined){
+                throw `Got undefined for ${z}, ${x}, ${y}`;
+            }
             if (data.length !== undefined) {
                 // This is an array
                 // If there is a single element, we have found our country
                 if (data.length === 1) {
-                    return data;
+                    callback(data)
+                    return;
                 }
 
                 // The appropriate subtile is determined by zoom level + 1
@@ -119,10 +128,10 @@ export default class CountryCoder {
     CountryCodeFor(lon: number, lat: number, callback: ((countries: string[]) => void)): void {
         // We wrap the callback into a try catch, in case something goes wrong
         const safeCallback = (countries) => {
-            try{
+            try {
                 callback(countries);
-            }catch(e){
-                console.error("Latlon2country: the dev of this website made a call with CountryCodeFor, however, their callback failed with "+e)
+            } catch (e) {
+                console.error("Latlon2country: the dev of this website made a call with CountryCodeFor, however, their callback failed with " + e)
             }
         }
         this.determineCountry(lon, lat, 0, 0, 0, safeCallback);
