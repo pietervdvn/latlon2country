@@ -46,11 +46,7 @@ export default class CountryCoder {
         const url = this._host + "/" + path;
         cached.callbacks.push(callback);
 
-        if (CountryCoder.runningFromConsole) {
-            var XMLHttpRequest = require("xhr2").XMLHttpRequest;
-        }
-        
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
         xhr.onload = function () {

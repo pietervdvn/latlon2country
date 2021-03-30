@@ -1,6 +1,6 @@
 {
   "name": "latlon2country",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Convert coordinates into the containing country",
   "main": "index.ts",
   "typings": "",
@@ -25,8 +25,7 @@
     "@types/node": "^14.14.10",
     "jquery": "^3.5.1",
     "ts-node": "^9.1.1",
-    "turf": "^3.0.14",
-    "xhr2": "^0.2.1"
+    "turf": "^3.0.14"
   },
   "devDependencies": {
     "@types/turf": "^3.5.32",
