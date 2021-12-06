@@ -1,19 +1,33 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs",
+    "target": "ES2015",
+    "module": "CommonJS",
     "lib": [
       "es2019",
       "dom"
     ],
     "declaration": true,
-    "outDir": "lib",
-    "rootDir": "client",
-    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "src",
+    "types": [
+      "node"
+    ],
     "strict": false,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": false,
+    "removeComments": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
   },
-  "include": ["client"],
-  "exclude": ["generator","data","lib","node_modules","tiles.zip"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "generator",
+    "data",
+    "lib",
+    "node_modules",
+    "tiles.zip"
+  ]
 }

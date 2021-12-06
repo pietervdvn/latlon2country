@@ -51,7 +51,7 @@ export default class BuildMergedTiles extends Step {
                         // Nothing more to do, this is fine!
                         continue;
                     }
-                  
+
                     if (state === TileState.NOT_DEFINED) {
                         throw "This should not happen"
                     }

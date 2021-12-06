@@ -65,7 +65,7 @@ export default class TileOverview {
         const x = xyz.x;
         const y = xyz.y;
 
-        console.log("Breaking ",z,x,y, this._countryName);
+        console.log("Breaking ", z, x, y, this._countryName);
         const status = this.DoesExist(z, x, y);
         if (status !== TileState.EXISTS) {
             throw "Attempting to split a tile which doesn't exist"
@@ -80,8 +80,8 @@ export default class TileOverview {
         function onNewTile(b: { z: number, x: number, y: number }) {
             results.push(b);
         }
-        
-        this.Add(z,x,y, TileState.ZOOM_IN_MORE);
+
+        this.Add(z, x, y, TileState.ZOOM_IN_MORE);
 
         this.IntersectAndWrite({z: z + 1, x: x * 2, y: y * 2}, geojson, onNewTile);
         this.IntersectAndWrite({z: z + 1, x: x * 2 + 1, y: y * 2}, geojson, onNewTile);
@@ -218,7 +218,7 @@ export default class TileOverview {
             return;
         }
 
-        
+
         // @ts-ignore
         if (intersection.type === "Point") {
             this.Add(z, x, y, TileState.NOT_DEFINED);
@@ -240,7 +240,7 @@ export default class TileOverview {
         return `${dir}${xyz.z}.${xyz.x}.${xyz.y}.geojson`;
     }
 
-    DoesExistT(tileXYZ: { z: number; x: number; y: number }) : TileState {
+    DoesExistT(tileXYZ: { z: number; x: number; y: number }): TileState {
         return this.DoesExist(tileXYZ.z, tileXYZ.x, tileXYZ.y);
     }
 }

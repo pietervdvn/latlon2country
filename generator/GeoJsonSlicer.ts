@@ -54,7 +54,7 @@ export default class GeoJsonSlicer extends Step {
                 sum += container.length;
             }
             return sum;
-        }else if(geojson.type === "Point"){
+        } else if (geojson.type === "Point") {
             return 0;
         }
         throw "Unknown type " + geojson.type;
@@ -65,7 +65,7 @@ export default class GeoJsonSlicer extends Step {
         const tileOverview = new TileOverview(this._countryName, this._countryName);
         tileOverview.Add(0, 0, 0);
         const zeroTile = {z: 0, x: 0, y: 0};
-        if(!fs.existsSync(tileOverview.GetPath(  ))){
+        if (!fs.existsSync(tileOverview.GetPath())) {
             fs.mkdirSync(tileOverview.GetPath(), {recursive: true});
         }
         fs.writeFileSync(tileOverview.GetPath(zeroTile), geoJsonString, {encoding: "utf8"});
@@ -74,9 +74,9 @@ export default class GeoJsonSlicer extends Step {
         while (queue.length > 0) {
             const tile = queue.pop();
             const geoJSON = tileOverview.GetGeoJson(tile);
-            if(this.Complexity(geoJSON) > this._maxComplexity){
-               const newTiles = tileOverview.BreakTile(tile);
-               queue.push(...newTiles);
+            if (this.Complexity(geoJSON) > this._maxComplexity) {
+                const newTiles = tileOverview.BreakTile(tile);
+                queue.push(...newTiles);
             }
         }
 

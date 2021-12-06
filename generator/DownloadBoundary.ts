@@ -12,7 +12,7 @@ export default class DownloadBoundary extends Step {
 
     private static readonly servers = [
         "https://nominatim.openstreetmap.org/search.php?",
-        "https://nominatim.geocoding.ai/search?", 
+        "https://nominatim.geocoding.ai/search?",
     ]
     private lastUsedServer = 0;
 

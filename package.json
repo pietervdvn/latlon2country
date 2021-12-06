@@ -1,9 +1,16 @@
 {
   "name": "latlon2country",
-  "version": "1.1.2",
+  "version": "1.2.3",
   "description": "Convert coordinates into the containing country",
-  "main": "index.ts",
-  "typings": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "/dist",
+    "README.md",
+    "tiles.zip",
+    "generator",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -project .",
     "publish": "npm run build && npm publish",
@@ -21,16 +28,15 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@turf/boolean-point-in-polygon": "^6.0.1",
-    "@turf/turf": "^5.1.6",
-    "@types/node": "^14.14.10",
-    "jquery": "^3.5.1",
-    "ts-node": "^9.1.1",
+    "@turf/turf": "^6.3.0",
     "turf": "^3.0.14"
   },
   "devDependencies": {
-    "@types/turf": "^3.5.32",
+    "@types/node": "^14.14.10",
+    "jquery": "^3.5.1",
     "js-yaml": "^3.14.0",
     "osmtogeojson": "^3.0.0-beta.4",
+    "ts-node": "^9.1.1",
     "typescript": "^4.1.2"
   }
 }
