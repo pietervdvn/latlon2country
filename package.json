@@ -1,6 +1,6 @@
 {
   "name": "latlon2country",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Convert coordinates into the containing country",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

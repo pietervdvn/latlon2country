@@ -1,4 +1,3 @@
-import * as https from "https";
 import * as turf from "turf";
 
 export class CountryCoder {
@@ -6,10 +5,11 @@ export class CountryCoder {
     /* url --> ([callbacks to call] | result) */
     private static readonly cache: Map<string, Promise<any>> = new Map<string, Promise<any>>()
     private readonly _host: string;
-    private static runningFromConsole = typeof window === "undefined";
+    private readonly _downloadFunction: (url: string) => Promise<any>;
 
-    constructor(host: string) {
+    constructor(host: string, downloadFunction?: (url: string) => Promise<any>) {
         this._host = host;
+        this._downloadFunction = downloadFunction;
     }
 
     public async GetCountryCodeAsync(lon: number, lat: number): Promise<string[]> {
@@ -26,43 +26,6 @@ export class CountryCoder {
 
     private static lat2tile(lat: number, zoom: number): number {
         return Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom));
-    }
-
-    private static FetchJsonNodeJS(url, headers?: any): Promise<any> {
-        return new Promise((resolve, reject) => {
-            try {
-                headers = headers ?? {}
-                headers.accept = "application/json"
-                console.log("ScriptUtils.DownloadJson(", url.substring(0, 40), url.length > 40 ? "..." : "", ")")
-                const urlObj = new URL(url)
-                https.get({
-                    host: urlObj.host,
-                    path: urlObj.pathname + urlObj.search,
-
-                    port: urlObj.port,
-                    headers: headers
-                }, (res) => {
-                    const parts: string[] = []
-                    res.setEncoding('utf8');
-                    res.on('data', function (chunk) {
-                        // @ts-ignore
-                        parts.push(chunk)
-                    });
-
-                    res.addListener('end', function () {
-                        const result = parts.join("")
-                        try {
-                            resolve(JSON.parse(result))
-                        } catch (e) {
-                            console.error("Could not parse the following as JSON:", result)
-                            reject(e)
-                        }
-                    });
-                })
-            } catch (e) {
-                reject(e)
-            }
-        })
     }
 
     private static FetchJsonXhr(url): Promise<any> {
@@ -86,8 +49,8 @@ export class CountryCoder {
     private async Fetch(z: number, x: number, y: number): Promise<number[] | string[] | any> {
         const path = `${z}.${x}.${y}.json`;
         const url = this._host + "/" + path;
-        if (CountryCoder.runningFromConsole) {
-            return CountryCoder.FetchJsonNodeJS(url)
+        if (this._downloadFunction !== undefined) {
+            return this._downloadFunction(url)
         } else {
             return CountryCoder.FetchJsonXhr(url)
         }
