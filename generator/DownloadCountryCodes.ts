@@ -8,12 +8,14 @@ writes them into
 export default class DownloadCountryCodes extends Step {
 
     // The following entries cause nominatim not to return a country, we skip them for now
-    private static readonly CountryBlackList =
+    public static readonly CountryBlackList =
         ["United States Minor Outlying Islands", "Saint Helena, Ascension and Tristan da Cunha", "Réunion",
             "French Polynesia", "Norfolk Island",
             "Saint Martin (French part)", "Martinique", "Antarctic Treaty area", "Marshall Islands", "Aruba", "Åland Islands",
             "Bouvet Island", "Cocos (Keeling) Islands", "Curaçao", "Christmas Island", "Isle of Man",
             "Comoros", "Western Sahara", "Jersey", "Guernsey", "Guam",
+            "Caribbean Netherlands", "Diego Garcia", "Ceuta and Melilla",
+            "Yugoslavia",
             // Duplicate entries:
             "Kingdom of the Netherlands", "Danish Realm", "Sahrawi Arab Democratic Republic"]
 

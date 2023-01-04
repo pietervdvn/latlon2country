@@ -24,7 +24,7 @@ new DownloadCountryCodes().PerformOrFromCache(() => "", (countries => {
         (geojson, countryName) => {
             let tileOverview: TileOverview = null;
             new GeoJsonSlicer(countryName).PerformOrFromCache(() => geojson, (tileIndex) => {
-                    // THis isn't entirely elegant, but it works as the geojson slicer is fully synchronized code, we now the return won't be run before this code
+                    // THis isn't entirely elegant, but it works as the geojson slicer is fully synchronized code, we know the return won't be run before this code
                     tileOverview = new TileOverview(countryCodes[countryName], countryName, tileIndex);
                 }
             )

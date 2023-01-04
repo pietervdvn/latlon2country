@@ -63,6 +63,17 @@ export default class GeoJsonSlicer extends Step {
 
     Step(geoJsonString: string, done: (result: string) => void) {
         const tileOverview = new TileOverview(this._countryName, this._countryName);
+        
+        const parsed = JSON.parse(geoJsonString)
+        if(parsed.type === "FeatureCollection"){
+
+            if(parsed.features.length > 1){
+                throw "Got a featurecollection with multiple features; only a single feature is supported"
+            }
+
+            geoJsonString = JSON.stringify(parsed.features[0])
+        }
+        
         tileOverview.Add(0, 0, 0);
         const zeroTile = {z: 0, x: 0, y: 0};
         if (!fs.existsSync(tileOverview.GetPath())) {

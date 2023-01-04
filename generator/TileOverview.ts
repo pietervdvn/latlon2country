@@ -59,13 +59,17 @@ export default class TileOverview {
         }
         return dx[y] ?? TileState.NOT_DEFINED;
     }
+    
+    private log(...text: (string | number)[]){
+        process.stdout.write("\r " + text.join(" ") + "                \r")
+    }
 
     BreakTile(xyz: { z: number, x: number, y: number }): { z: number, x: number, y: number }[] {
         const z = xyz.z;
         const x = xyz.x;
         const y = xyz.y;
 
-        console.log("Breaking ", z, x, y, this._countryName);
+        this.log("Breaking ", z, x, y, this._countryName);
         const status = this.DoesExist(z, x, y);
         if (status !== TileState.EXISTS) {
             throw "Attempting to split a tile which doesn't exist"
@@ -146,12 +150,16 @@ export default class TileOverview {
         return result;
     }
 
-    WriteGeoJson(xyz: { z: number; x: number; y: number }, contents: any) {
-        fs.writeFileSync(this.GetPath(xyz), JSON.stringify(contents), {encoding: "utf8"});
+    WriteGeoJson(xyz: { z: number; x: number; y: number }, contents: any, extension?: string) {
+        fs.writeFileSync(this.GetPath(xyz, extension), JSON.stringify(contents), {encoding: "utf8"});
+    }
+    
+    DoesFileExist(xyz: { z: number; x: number; y: number }, extension?: string){
+        return fs.existsSync(this.GetPath(xyz, extension))
     }
 
-    GetGeoJson(xyz: { z: number; x: number; y: number }) {
-        return JSON.parse(fs.readFileSync(this.GetPath(xyz), {encoding: "utf8"}))
+    GetGeoJson(xyz: { z: number; x: number; y: number }, extension?: string) {
+        return JSON.parse(fs.readFileSync(this.GetPath(xyz, extension), {encoding: "utf8"}))
 
     }
 
@@ -207,7 +215,6 @@ export default class TileOverview {
     }
 
     private IntersectAndWrite(bounds: { x: number, y: number, z: number }, geojson: any, onNewTile: (t: { z: number, x: number, y: number }) => void) {
-        // @ts-ignore
         const intersection = turf.intersect(geojson, TileOverview.tile2Bounds(bounds));
         const z = bounds.z;
         const x = bounds.x;
@@ -232,12 +239,15 @@ export default class TileOverview {
         onNewTile(bounds);
     }
 
-    GetPath(xyz?: { z: number; x: number; y: number }) {
+    GetPath(xyz?: { z: number; x: number; y: number }, extension: string = ".geojson") {
         const dir = `${this._path}/${this._countryName}/`
         if (xyz === undefined || xyz === null) {
             return dir;
         }
-        return `${dir}${xyz.z}.${xyz.x}.${xyz.y}.geojson`;
+        if(!extension.startsWith(".")){
+            extension = "."+extension
+        }
+        return `${dir}${xyz.z}.${xyz.x}.${xyz.y}${extension}`;
     }
 
     DoesExistT(tileXYZ: { z: number; x: number; y: number }): TileState {

@@ -16,7 +16,7 @@ export default class DownloadBoundary extends Step {
     ]
     private lastUsedServer = 0;
 
-    Step(input: string, done: (result: string) => void) {
+    Step(input: string, done: (result: string | null) => void) {
         // input should be the same as the country name
         const countryName = input;
 
@@ -28,9 +28,10 @@ export default class DownloadBoundary extends Step {
         Utils.Download(query, data => {
             const json = JSON.parse(data)[0];
             if (json.category !== "boundary") {
-                console.error("THIS IS NOT A BOUNDARY FOR " + countryName);
-                return;
+                console.trace( `THIS IS NOT A BOUNDARY FOR ${countryName} at ${query}`);
+                return
             }
+                
             done(JSON.stringify(json.geojson));
         })
     };

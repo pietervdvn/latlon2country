@@ -75,10 +75,16 @@ export default class BuildMergedTiles extends Step {
         // Now, we can actually build the leaf tiles by merging the geojson features
         const allTiles = tileOverview.GetTileOverview();
         let count = 0;
+        let skipped = 0;
         for (const xyz of allTiles) {
             count++;
+            if(tileOverview.DoesFileExist(xyz, ".json")){
+                skipped++
+                continue
+            }
+            
             if (count % 100 == 0) {
-                console.log("Constructed tile ", count + "/" + allTiles.length);
+                console.log(`Constructed tile ${count}/${allTiles.length} (skipped ${skipped})`);
             }
             const features = []
             for (const countryTile of countryTiles) {
@@ -108,7 +114,7 @@ export default class BuildMergedTiles extends Step {
                 type: "FeatureCollection",
                 features: features
             }
-            tileOverview.WriteGeoJson(xyz, geojson);
+            tileOverview.WriteGeoJson(xyz, geojson, ".json");
         }
 
 
