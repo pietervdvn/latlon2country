@@ -7,7 +7,15 @@ export class CountryCoder {
     private readonly _host: string;
     private readonly _downloadFunction: (url: string) => Promise<any>;
 
+    /**
+     * 
+     * @param host: where the sliced country files can be found
+     * @param downloadFunction: a function which downloads and parsed the file as a JSON at the given URL. Useful to inject e.g. fetch 
+     */
     constructor(host: string, downloadFunction?: (url: string) => Promise<any>) {
+        if(!host.endsWith("/")){
+            host += "/"
+        }
         this._host = host;
         this._downloadFunction = downloadFunction;
     }
@@ -48,7 +56,7 @@ export class CountryCoder {
 
     private async Fetch(z: number, x: number, y: number): Promise<number[] | string[] | any> {
         const path = `${z}.${x}.${y}.json`;
-        const url = this._host + "/" + path;
+        const url = this._host + path;
         if (this._downloadFunction !== undefined) {
             return this._downloadFunction(url)
         } else {

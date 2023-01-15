@@ -26,6 +26,7 @@ export default class DownloadCountryCodes extends Step {
     public Step(_, done: (countryCodes: string) => void) {
         const query = "https://query.wikidata.org/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%20%3Flabel%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP297%20%3Flabel.%0A%7D%0ALIMIT%20500"
         Utils.Download(query, (data => {
+            console.log("Download country codes from wikidata")
             const lines = data.split("\n");
             const codes = []
             const countries = []

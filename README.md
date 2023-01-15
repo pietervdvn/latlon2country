@@ -46,10 +46,10 @@ The requested tiles all have the extension '.json'. THey however break down into
 
 A 'leaf'-tile is a tile with which the actual country can be determined without downloading more tiles.
 
-If the result is uniform accross the tile (most commonly: the tile is completely within a single country), then the tile
+If the result is uniform across the tile (most commonly: the tile is completely within a single country), then the tile
 will consist of `["country_code"]`
 
-If a border goes trhough the tile, the tile will contain the actual geometries and the leaftile is a standard geojson
+If a border goes through the tile, the tile will contain the actual geometries and the leaftile is a standard geojson
 file.
 
 The client library will enumerate _all_ the polygons and determine in which polygons the requested points lie. Multiple

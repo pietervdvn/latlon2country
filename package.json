@@ -29,6 +29,7 @@
   "dependencies": {
     "@turf/boolean-point-in-polygon": "^6.0.1",
     "@turf/turf": "^6.3.0",
+    "https": "^1.0.0",
     "turf": "^3.0.14"
   },
   "devDependencies": {

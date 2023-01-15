@@ -11,6 +11,10 @@ import BuildMergedTiles from "./BuildMergedTiles";
 import SimplifyTile from "./SimplifyTiles";
 import * as fs from "fs";
 
+if(!fs.existsSync("../data")){
+    fs.mkdirSync("../data")
+}
+
 new DownloadCountryCodes().PerformOrFromCache(() => "", (countries => {
 
     const countryCodes = {};
@@ -54,7 +58,7 @@ new DownloadCountryCodes().PerformOrFromCache(() => "", (countries => {
                     if (state === TileState.EXISTS) {
                         new SimplifyTile(tileXYZ).PerformOrFromCache(() => {
                             // We need to read the tile from disk
-                            return fs.readFileSync(mergedTiles.GetPath(tileXYZ), {encoding: "utf8"})
+                            return fs.readFileSync(mergedTiles.GetPath(tileXYZ,".json"), {encoding: "utf8"})
                         }, (result) => {
                             const key = `${tileXYZ.z}.${tileXYZ.x}.${tileXYZ.y}`;
 
@@ -119,7 +123,7 @@ new DownloadCountryCodes().PerformOrFromCache(() => "", (countries => {
 
                     }
                 }
-                console.log("All Done!")
+                console.log("All Done! The necessary tiles are in data/Simplified")
             })
 
         })

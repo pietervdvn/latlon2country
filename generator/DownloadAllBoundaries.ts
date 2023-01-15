@@ -27,7 +27,6 @@ export default class DownloadAllBoundaries {
             // Lebanon
 
             const firstCountry = queue.pop();
-            console.log("NExt target:", firstCountry)
             new DownloadBoundary(firstCountry).PerformOrFromCache(() => firstCountry,
                 geojson => {
                     if (geojson !== null) {
