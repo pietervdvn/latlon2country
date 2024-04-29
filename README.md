@@ -1,7 +1,7 @@
 LatLon2Country
 ==============
 
-LatLon2Country is a reverse geocoder, whose goal is to convert a location (latlon) into the country code in which the
+LatLon2Country is a reverse geocoder, whose goal is to convert a location (latlon) into the [ISO 3166-1 alpha-2 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) in which the
 location lies in the browser.
 
 It is specifically designed to work with opening_hours.js and MapComplete and borrows ideas from codegrid.
