@@ -1,3 +1,5 @@
+NOTE: this repository moved to [source.mapcomplete.org](https://source.mapcomplete.org/MapComplete/latlon2country)
+
 LatLon2Country
 ==============
 
